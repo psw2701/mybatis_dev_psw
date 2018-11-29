@@ -1,6 +1,8 @@
 package kr.or.yi.mybatis_dev_psw.dto;
 
+import org.apache.ibatis.type.Alias;
 
+@Alias("PhoneNumber")
 public class PhoneNumber {
 	private String countryCode;
 	private String stateCode;
