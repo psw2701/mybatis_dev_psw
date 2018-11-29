@@ -14,6 +14,7 @@ public class AbstractTest {
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		System.out.println();
 	}
 
 
