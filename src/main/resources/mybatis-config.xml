@@ -5,6 +5,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <configuration>
 	<properties resource="application.properties" />
 	
+	<typeAliases>
+		<package name="kr.or.yi.mybatis_dev_psw.dto" />
+	</typeAliases>
+	
 	<environments default="development2">
 
 		<environment id="development1">
