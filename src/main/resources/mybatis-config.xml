@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<environment id="development2">
 			<transactionManager type="JDBC" />
 			<dataSource
-				type="kr.or.yi.mybatis_dev_psw.dto.C3p0DataSourecFactory">
+				type="kr.or.yi.mybatis_dev_psw.jdbc.C3p0DataSourecFactory">
 				<property name="driver" value="${driver}" />
 				<property name="url" value="${url}" />
 				<property name="username" value="${username}" />
