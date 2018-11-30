@@ -1,10 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.yi.mybatis_dev_psw.dao.StudentMapper">
-	 <sql id="selectSql">
-		select stud_id as studid, name, email, dob, phone from students
+
+	<!-- resultmap -->
+	<resultMap type="Student" id="StudentResult">
+		<id property="studId" column="stud_id" />
+		<result property="name" column="name" />
+		<result property="email" column="email" />
+		<result property="phone" column="phone" />
+		<result property="dob" column="dob" />
+
+	</resultMap>
+
+
+	<resultMap type="Student" id="StudentWithAddressResult"	extends="StudentResult">
+		<result property="address.addrId" column="addr_id" />
+		<result property="address.street" column="street" />
+		<result property="address.city" column="city" />
+		<result property="address.state" column="state" />
+		<result property="address.zip" column="zip" />
+		<result property="address.country" column="country" />
+	</resultMap>
+
+	<sql id="selectJoinAddressSql">
+		Select stud_id, name, email, phone, a.addr_id, street, city, zip, country
+		from students s left outer join addresses a on	s.addr_id=a.addr_id
 	</sql>
-	
+
+	<select id="selectStudentByNoForResultMapExtends" parameterType="Student" resultMap="StudentWithAddressResult">
+		<include refid="selectJoinAddressSql" />
+		<include refid="whereSql" />
+	</select>
+
+ 	<resultMap type="Student" id="StudentWithAddressResult2">
+		<id property="studId" column="stud_id" />
+		<result property="name" column="name" />
+		<result property="email" column="email" />
+		<result property="phone" column="phone" />
+		<result property="dob" column="dob" />
+		<result property="address.addrId" column="addr_id" />
+		<result property="address.street" column="street" />
+		<result property="address.city" column="city" />
+		<result property="address.state" column="state" />
+		<result property="address.zip" column="zip" />
+		<result property="address.country" column="country" />
+	</resultMap>
+
+	<select id="selectStudentByNoForResultMapExtends2"
+		parameterType="int" resultMap="StudentWithAddressResult2">
+		Select stud_id, name, email, phone,a.addr_id, street,city, zip, country
+		from students s left outer join	addresses a on	s.addr_id=a.addr_id
+		where stud_id=#{studId}
+	</select> 
+
+
+
+
+
+
+	<select id="selectStudentByAllForResultMap"
+		resultMap="StudentResult">
+		<include refid="selectSql"></include>
+	</select>
+	<!-- HashMap -->
+	<select id="selectStudentByAllForHashMap" resultType="map">
+		<include refid="selectSql" />
+	</select>
+
+
+
+	<sql id="selectSql">
+		select stud_id as studid, name, email, dob, phone from
+		students
+	</sql>
+
 	<sql id="whereSql">
 		<where>
 			<if test="studId != null">
@@ -12,40 +81,44 @@
 			</if>
 		</where>
 	</sql>
-	
-	<select id="selectStudentbyNo" parameterType="Student" resultType="Student">
-		<include refid="selectSql"/>
-		<include refid="whereSql"/>
-		
+
+	<select id="selectStudentbyNo" parameterType="Student"
+		resultType="Student">
+		<include refid="selectSql" />
+		<include refid="whereSql" />
+
 		<!-- select stud_id as studid, name, email, dob, phone from students -->
-		<!--  where stud_id=#{studId}; -->
+		<!-- where stud_id=#{studId}; -->
 	</select>
-	
+
 	<select id="selectStudentByAll" resultType="Student">
 		select stud_id as studid, name, email, dob, phone from students
 		<!-- select stud_id as studid, name, email, dob, phone from students -->
 	</select>
-	
+
 	<!-- insert -->
 	<sql id="insertSql">
 		insert into students( name, email, phone, dob)
-		values( #{name}, #{email}, #{phone}, #{dob})
+		values(
+		#{name}, #{email}, #{phone}, #{dob})
 	</sql>
 	<insert id="insertStudent" parameterType="Student">
-		<include refid="insertSql"/>
+		<include refid="insertSql" />
 	</insert>
-	
+
 	<!-- update -->
 	<sql id="updateSql">
-		update students set name=#{name}, email=#{email}, phone=#{phone}, dob=#{dob}
+		update students set name=#{name}, email=#{email},
+		phone=#{phone}, dob=#{dob}
 		where stud_id=#{studId}
 	</sql>
 	<update id="updateStudent" parameterType="Student">
-		<include refid="updateSql"/>
+		<include refid="updateSql" />
 	</update>
-	
+
 	<!-- delete -->
 	<delete id="deleteStudent" parameterType="int">
-		delete from students where stud_id=#{studId}
+		delete from students
+		where stud_id=#{studId}
 	</delete>
 </mapper>
