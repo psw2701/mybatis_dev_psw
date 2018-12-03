@@ -2,6 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.yi.mybatis_dev_psw.dao.StudentMapper">
 
+	<!-- 내포된 결과 매핑(ResultMap)을 사용한 일대일 매핑 -->
+	<resultMap type="Student" id="StudentAssociation" extends="StudentResult">
+		<association property="address" resultMap="kr.or.yi.mybatis_dev_psw.dao.AddressMapper.AddressResult" />
+	</resultMap>
+	
+	
+	<select id="selectStudentByNoAssociation"
+		parameterType="Student" resultMap="StudentAssociation">
+		<include refid="selectJoinAddressSql" />
+		<include refid="whereSql" />
+	</select>
+
+
+
 	<!-- resultmap -->
 	<resultMap type="Student" id="StudentResult">
 		<id property="studId" column="stud_id" />
@@ -13,7 +27,8 @@
 	</resultMap>
 
 
-	<resultMap type="Student" id="StudentWithAddressResult"	extends="StudentResult">
+	<resultMap type="Student" id="StudentWithAddressResult"
+		extends="StudentResult">
 		<result property="address.addrId" column="addr_id" />
 		<result property="address.street" column="street" />
 		<result property="address.city" column="city" />
@@ -23,16 +38,21 @@
 	</resultMap>
 
 	<sql id="selectJoinAddressSql">
-		Select stud_id, name, email, phone, a.addr_id, street, city, zip, country
-		from students s left outer join addresses a on	s.addr_id=a.addr_id
+		Select stud_id, name, email, phone, a.addr_id, street,
+		city, zip, country
+		from students s left outer join addresses a on
+		s.addr_id=a.addr_id
 	</sql>
+	
+	
 
-	<select id="selectStudentByNoForResultMapExtends" parameterType="Student" resultMap="StudentWithAddressResult">
+	<select id="selectStudentByNoForResultMapExtends"
+		parameterType="Student" resultMap="StudentWithAddressResult">
 		<include refid="selectJoinAddressSql" />
 		<include refid="whereSql" />
 	</select>
 
- 	<resultMap type="Student" id="StudentWithAddressResult2">
+	<resultMap type="Student" id="StudentWithAddressResult2">
 		<id property="studId" column="stud_id" />
 		<result property="name" column="name" />
 		<result property="email" column="email" />
@@ -48,10 +68,12 @@
 
 	<select id="selectStudentByNoForResultMapExtends2"
 		parameterType="int" resultMap="StudentWithAddressResult2">
-		Select stud_id, name, email, phone,a.addr_id, street,city, zip, country
-		from students s left outer join	addresses a on	s.addr_id=a.addr_id
+		Select stud_id, name, email,
+		phone,a.addr_id, street,city, zip, country
+		from students s left outer
+		join addresses a on s.addr_id=a.addr_id
 		where stud_id=#{studId}
-	</select> 
+	</select>
 
 
 

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.ibatis.session.SqlSession;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -127,6 +128,16 @@ public class StudentMapperTest extends AbstractTest {
 	public void test09selectStudentByNoForResultMapExtends2() {
 		log.debug("test09selectStudentByNoForResultMapExtends2");
 		Student lists = dao.selectStudentByNoForResultMapExtends2(1);
+		Assert.assertNotNull(lists);
+	}
+	
+	@Test
+	public void test10selectStudentByNoAssociation() {
+		log.debug("test10selectStudentByNoAssociation");
+		Student student = new Student();
+		student.setStudId(1);
+		
+		Student lists = dao.selectStudentByNoAssociation(student);
 		Assert.assertNotNull(lists);
 	}
 }
