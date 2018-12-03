@@ -80,5 +80,12 @@ public class StudentMapperImpl implements StudentMapper {
 		}
 	}
 
+	@Override
+	public Student selectStudentOneToOne(int studId) {
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
+			return sqlSession.selectOne(namespace + ".selectStudentOneToOne", studId);
+		}
+	}
+
 
 }

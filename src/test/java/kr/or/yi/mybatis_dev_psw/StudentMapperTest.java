@@ -112,4 +112,11 @@ public class StudentMapperTest extends AbstractTest{
 		Assert.assertNotNull(lists);
 		
 	}
+	
+	@Test
+	public void testselectStudentOneToOne() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+		Student student = dao.selectStudentOneToOne(1);
+		Assert.assertNotNull(student);
+	}
 }

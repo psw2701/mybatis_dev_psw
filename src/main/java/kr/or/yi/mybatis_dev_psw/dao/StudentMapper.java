@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.ResultMap;
@@ -75,5 +76,13 @@ public interface StudentMapper {
 	})		
 	List<Student>selectStudentByAllForResultMapExt();
 	
-
+	@Select("select * from students where stud_id=#{studId}")
+	@Results({
+		@Result(id = true, column = "stud_id", property = "studId"),
+		@Result (column = "name", property = "name"),
+		@Result (column = "email", property = "email"),
+		@Result (column = "addr_id", property = "address", one=@One(select="kr.or.yi.mybatis_dev_psw.dao.AddressMapper.selectAddressById"))
+		
+	})
+	Student selectStudentOneToOne(int studId);
 }
