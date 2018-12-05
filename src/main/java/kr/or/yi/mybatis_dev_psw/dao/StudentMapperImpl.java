@@ -93,6 +93,29 @@ public class StudentMapperImpl implements StudentMapper {
 		}
 	}
 
+	@Override
+	public int insertEnumStudent(Student student) {
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			int res = sqlSession.insert(namespace + ".insertEnumStudent", student);
+			sqlSession.commit();
+			return res;
+		}
+	}
+
+	@Override
+	public List<Student> selectStudentWithGender() {
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			return sqlSession.selectList(namespace + ".selectStudentWithGender");
+
+		}
+	}
+
+	/*@Override
+	public Student selectAllStudentBvParam(String name, String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}*/
+
 
 
 	

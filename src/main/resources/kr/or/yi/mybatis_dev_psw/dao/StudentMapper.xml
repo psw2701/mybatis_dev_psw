@@ -2,6 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.yi.mybatis_dev_psw.dao.StudentMapper">
 
+	<!-- enum 타입 다루기 -->
+	<sql id="insertEnumSql">
+		insert into students(stud_id, name, email, phone, dob, gender)
+		values(#{studId}, #{name}, #{email}, #{phone}, #{dob}, #{gender})
+	</sql>
+	
+	<insert id="insertEnumStudent" parameterType="Student" useGeneratedKeys="true" keyProperty="studId">
+		<include refid="insertEnumSql"/>
+	</insert>
+	
+	<resultMap type="Student" id="StudentResultGender" extends="StudentResult">
+		<result property="gender" column="gender"/>
+	</resultMap>
+	
+	<select id="selectStudentWithGender" resultMap="StudentResultGender">
+		select stud_id as studid, name, email, dob, phone, gender from students
+	</select>
+	
+	<!-- 여러개의 입력 파라미터 전달 -->
+	<sql id="selectParameterSql">
+		select stud_id, name, email, phone, dob, gender from students
+	</sql>
+	
+	<sql id="whereNameEmailSql">
+		<where>
+			<if test="name != null">
+				name = #{name}
+			</if>
+			<if test="email !=null">
+				AND email = {email}
+			</if>
+		</where>
+	</sql>
+
+
+
 	<!-- 내포된 결과 매핑(ResultMap)을 사용한 일대일 매핑 -->
 	<resultMap type="Student" id="StudentAssociation" extends="StudentResult">
 		<association property="address" resultMap="kr.or.yi.mybatis_dev_psw.dao.AddressMapper.AddressResult" />

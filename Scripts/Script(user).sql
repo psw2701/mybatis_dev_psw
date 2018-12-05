@@ -18,3 +18,5 @@ select t.tutor_id, t.name as tutor_name, email, c.course_id, c.name, description
 from tutors t left outer join addresses a on t.ADDR_ID=a.ADDR_ID
 left outer join courses c on t.tutor_id=c.tutor_id;
 
+
+alter table students add gender tinyint unsigned;

@@ -18,6 +18,7 @@ import org.junit.runners.MethodSorters;
 
 import kr.or.yi.mybatis_dev_psw.dao.StudentMapper;
 import kr.or.yi.mybatis_dev_psw.dao.StudentMapperImpl;
+import kr.or.yi.mybatis_dev_psw.dto.Gender;
 import kr.or.yi.mybatis_dev_psw.dto.PhoneNumber;
 import kr.or.yi.mybatis_dev_psw.dto.Student;
 
@@ -139,5 +140,25 @@ public class StudentMapperTest extends AbstractTest {
 		
 		Student lists = dao.selectStudentByNoAssociation(student);
 		Assert.assertNotNull(lists);
+	}
+	
+	@Test
+	public void test11insertEnumStudent() {
+		log.debug("test11insertEnumStudent");
+		
+		Calendar newDate = GregorianCalendar.getInstance();
+		newDate.set(1990, 2, 28);
+		
+		Student student = new Student();
+		student.setName("test");
+		student.setEmail("test@test.co.kr");
+		student.setDob(newDate.getTime());
+		student.setPhone(new PhoneNumber("010-1234-1234"));
+		student.setGender(Gender.FEMALE);
+		
+		int res = dao.insertEnumStudent(student);
+		Assert.assertEquals(1, res);
+
+		
 	}
 }

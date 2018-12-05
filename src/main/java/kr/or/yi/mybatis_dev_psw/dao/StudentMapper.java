@@ -12,6 +12,13 @@ public interface StudentMapper {
 	int updateStudent(Student student);
 	int deleteStudent(int id);
 	
+	//enum 타입 다루기
+	int insertEnumStudent(Student student);
+	List<Student> selectStudentWithGender();
+	
+	//여러개의 입력 파라미터 전달
+	/*Student selectAllStudentBvParam(String name, String email);*/
+	
 	//ResultMap
 	List<Student>  selectStudentByAllForResultMap();
 	
