@@ -20,3 +20,13 @@ left outer join courses c on t.tutor_id=c.tutor_id;
 
 
 alter table students add gender tinyint unsigned;
+
+
+create table user_pics(
+	id integer auto_increment primary key,
+	name varcharacter(50),
+	pic longblob,
+	bio longtext
+);
+
+desc user_pics;
