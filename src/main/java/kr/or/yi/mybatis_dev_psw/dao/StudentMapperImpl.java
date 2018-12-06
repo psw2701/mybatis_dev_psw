@@ -110,11 +110,17 @@ public class StudentMapperImpl implements StudentMapper {
 		}
 	}
 
-	/*@Override
-	public Student selectAllStudentBvParam(String name, String email) {
-		// TODO Auto-generated method stub
-		return null;
-	}*/
+
+
+	@Override
+	public List<Student> selectAllStudentByMap(Map<String, String> map) {
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			return sqlSession.selectList(namespace + ".selectAllStudentByMap",map);
+
+		}
+	}
+
+	
 
 
 

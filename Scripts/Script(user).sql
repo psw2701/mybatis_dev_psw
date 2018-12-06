@@ -30,3 +30,5 @@ create table user_pics(
 );
 
 desc user_pics;
+
+select * from students;

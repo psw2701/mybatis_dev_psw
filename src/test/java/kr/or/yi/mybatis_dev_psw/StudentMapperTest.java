@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -159,6 +160,28 @@ public class StudentMapperTest extends AbstractTest {
 		int res = dao.insertEnumStudent(student);
 		Assert.assertEquals(1, res);
 
+		
+	}
+	
+	@Test
+	public void test12selectAllStudentByParam() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+	      Map<String, String> map = new HashMap<>();
+	      map.put("name", "홍길동4");
+	      List<Student> stdList = dao.selectAllStudentByMap(map);
+	      Assert.assertNotNull(stdList);
+	      
+	      map.remove("name");
+	      map.put("email", "rlawpdud301@naver.com");
+	      stdList.clear();
+	      stdList = dao.selectAllStudentByMap(map);
+	      Assert.assertNotNull(stdList);
+	      
+	      map.put("name", "홍길동4");
+	      stdList.clear();
+	      stdList = dao.selectAllStudentByMap(map);
+	      Assert.assertNotNull(stdList);
+		
 		
 	}
 }
