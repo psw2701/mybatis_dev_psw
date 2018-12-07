@@ -164,7 +164,7 @@ public class StudentMapperTest extends AbstractTest {
 	}
 	
 	@Test
-	public void test12selectAllStudentByParam() {
+	public void selectAllStudentByMap() {
 		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
 	      Map<String, String> map = new HashMap<>();
 	      map.put("name", "홍길동4");
@@ -183,5 +183,28 @@ public class StudentMapperTest extends AbstractTest {
 	      Assert.assertNotNull(stdList);
 		
 		
+	}
+	
+	@Test
+	public void test13selectStudentForMap() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+		Map<Integer, String> map = dao.selectStudentForMap();
+		
+		for(Entry<Integer, String>entry : map.entrySet()) {
+			System.out.println(String.format("key(%s) - value(%s)%n", entry.getKey(), entry.getValue()));
+		}
+		Assert.assertNotNull(map);
+	}
+	
+	@Test
+	public void test14selectStudentAllForMap() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+		Map<Integer, Student> map = dao.selectStudentAllForMap();
+		
+		for(Entry<Integer, Student>entry : map.entrySet()) {
+			System.out.println(String.format("key(%s) - value(%s)%n", entry.getKey(), entry.getValue()));
+		}
+		Assert.assertNotNull(map);
+
 	}
 }

@@ -32,3 +32,6 @@ create table user_pics(
 desc user_pics;
 
 select * from students;
+
+
+		select course_id, name, description, start_date, end_date from courses

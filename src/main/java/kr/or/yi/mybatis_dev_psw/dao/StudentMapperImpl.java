@@ -1,8 +1,11 @@
 package kr.or.yi.mybatis_dev_psw.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.ResultContext;
+import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.SqlSession;
 
 import kr.or.yi.mybatis_dev_psw.dto.Student;
@@ -116,6 +119,45 @@ public class StudentMapperImpl implements StudentMapper {
 	public List<Student> selectAllStudentByMap(Map<String, String> map) {
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
 			return sqlSession.selectList(namespace + ".selectAllStudentByMap",map);
+
+		}
+	}
+
+	@Override
+	public Map<Integer, String> selectStudentForMap() {
+		Map<Integer, String> map = new HashMap<>();
+		ResultHandler<Student> resultHandler = new ResultHandler<Student>() {
+
+			@Override
+			public void handleResult(ResultContext<? extends Student> resultContext) {
+				Student student = resultContext.getResultObject();
+//				System.out.println();
+				map.put(student.getStudId(), student.getName());
+				
+			}
+		};
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			sqlSession.select(namespace + ".selectStudentForMap",resultHandler);
+			return map;
+
+		}
+	}
+
+	@Override
+	public Map<Integer, Student> selectStudentAllForMap() {
+		Map<Integer, Student> map = new HashMap<>();
+		ResultHandler<Student> resultHandler = new ResultHandler<Student>() {
+
+			@Override
+			public void handleResult(ResultContext<? extends Student> resultContext) {
+				Student student = resultContext.getResultObject();
+				map.put(student.getStudId(), student);
+				
+			}
+		};
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			sqlSession.select(namespace + ".selectStudentForMap",resultHandler);
+			return map;
 
 		}
 	}

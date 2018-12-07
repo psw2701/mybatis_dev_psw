@@ -18,9 +18,13 @@ public interface StudentMapper {
 	
 	//여러개의 입력 파라미터 전달
 
-//Student selectAllSTudentByStudent(Student student);
+	//Student selectAllSTudentByStudent(Student student);
 	List<Student> selectAllStudentByMap(Map<String, String> map);
 	
+	//ResultSet 처리 방식의 재정의
+	Map<Integer, String> selectStudentForMap();
+	Map<Integer, Student> selectStudentAllForMap();
+
 	//ResultMap
 	List<Student>  selectStudentByAllForResultMap();
 	

@@ -45,6 +45,22 @@
 		<include refid="selectParameterSql"/>
 		<include refid="whereNameEmailSql"/>
 	</select>
+	
+	<!-- ResultSet 처리 방식의 재정의 -->
+	<resultMap type="Student" id="studentIdName">
+		<id property="studId" column="stud_id"/>
+		<result property="name" column="name"/>
+	</resultMap>
+	<select id="selectStudentForMap" resultMap="studentIdName">
+		select stud_id, name from students
+	</select>
+	
+	<select id="selectStudentAllForMap" resultMap="StudentResultGender">
+		select stud_id, name, email, phone, dob, gender from students
+	</select>
+	
+	<!-- set 조건 -->
+	
 
 	<!-- 내포된 결과 매핑(ResultMap)을 사용한 일대일 매핑 -->
 	<resultMap type="Student" id="StudentAssociation" extends="StudentResult">
